@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="2.5" type="plugin" group="system" method="upgrade">
+	<name>HikaShop R2H free product plugin</name>
+	<creationDate>10-7-2016</creationDate>
+	<version>1.0.0</version>
+	<author>Rick Spaan</author>
+	<authorEmail>rick@r2h.nl</authorEmail>
+	<authorUrl>http://www.r2h.nl</authorUrl>
+	<copyright>(C) 2010-2016 R2H B.V.. All rights reserved.</copyright>
+	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
+	<description>
+        <![CDATA[
+            <H3>How to use this plugin</h3>
+            <p>
+            Activate the plugin<br>
+            Add a category that is not in the default product listing, in most cases the root. This way the product is by default not visible.<br>
+            Add a product to this category with the price of 0.<br>
+            Remember the Hikashop product ID and add it to the product ID field in this plugin.<br>
+            Set the quantity and the minimum price at which the free product will be added.<br>
+            </p>
+        ]]>
+    </description>
+	<files>
+		<filename plugin="custom_freeproduct">custom_freeproduct.php</filename>
+		<filename>index.html</filename>
+	</files>
+	<config>
+		<fields name="params">
+			<fieldset name="basic">
+				<field name="free_prod_id"  type="text" default="" label="Product ID" description="Get the free product Hikashop ID." filter="integer" />
+                <field name="free_prod_quantity"  type="text" default="1" label="Quantity" description="The quantity of the free product that will be added to the cart." filter="integer" />
+                <field name="free_prod_price"  type="text" default="0" label="Minimum price" description="Fill the minimum price ad which the free product will be added." filter="integer" />
+			</fieldset>
+		</fields>
+	</config>
+</extension>
