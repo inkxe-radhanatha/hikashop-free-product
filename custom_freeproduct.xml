@@ -1,35 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension version="2.5" type="plugin" group="system" method="upgrade">
-	<name>HikaShop R2H free product plugin</name>
-	<creationDate>10-7-2016</creationDate>
-	<version>1.0.0</version>
+	<name>PLG_SYSTEM_FREEPRODUCT</name>
+	<creationDate>24-11-2016</creationDate>
+	<version>1.0.2</version>
 	<author>Rick Spaan</author>
 	<authorEmail>rick@r2h.nl</authorEmail>
 	<authorUrl>http://www.r2h.nl</authorUrl>
 	<copyright>(C) 2010-2016 R2H B.V.. All rights reserved.</copyright>
 	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
-	<description>
-        <![CDATA[
-            <H3>How to use this plugin</h3>
-            <p>
-            Activate the plugin<br>
-            Add a category that is not in the default product listing, in most cases the root. This way the product is by default not visible.<br>
-            Add a product to this category with the price of 0.<br>
-            Remember the Hikashop product ID and add it to the product ID field in this plugin.<br>
-            Set the quantity and the minimum price at which the free product will be added.<br>
-            </p>
-        ]]>
-    </description>
+	<description>PLG_SYSTEM_FREEPRODUCT_XML_DESCRIPTION</description>
 	<files>
 		<filename plugin="custom_freeproduct">custom_freeproduct.php</filename>
 		<filename>index.html</filename>
 	</files>
+    <languages>
+        <language tag="en-GB">language/en-GB/en-GB.plg_system_custom_freeproduct.ini</language>
+        <language tag="en-GB">language/en-GB/en-GB.plg_system_custom_freeproduct.sys.ini</language>
+    </languages>
 	<config>
 		<fields name="params">
 			<fieldset name="basic">
-				<field name="free_prod_id"  type="text" default="" label="Product ID" description="Get the free product Hikashop ID." filter="integer" />
-                <field name="free_prod_quantity"  type="text" default="1" label="Quantity" description="The quantity of the free product that will be added to the cart." filter="integer" />
-                <field name="free_prod_price"  type="text" default="0" label="Minimum price" description="Fill the minimum price ad which the free product will be added." filter="integer" />
+				<field name="free_prod_id" type="text" default="0" label="PLG_SYSTEM_FREEPRODUCT_ID_LBL" description="PLG_SYSTEM_FREEPRODUCT_ID_DESC" filter="integer" />
+                <field name="free_prod_quantity" type="text" default="1" label="PLG_SYSTEM_FREEPRODUCT_PRODQUANT_LBL" description="PLG_SYSTEM_FREEPRODUCT_PRODQUANT_DESC" filter="integer" />
+                <field name="free_prod_price" type="text" default="0" label="PLG_SYSTEM_FREEPRODUCT_MINPRICE_LBL" description="PLG_SYSTEM_FREEPRODUCT_MINPRICE_DESC" filter="integer" />
+				<field name="usecoupon" type="radio" default="0" label="PLG_SYSTEM_FREEPRODUCT_USECOUPON_LBL" description="PLG_SYSTEM_FREEPRODUCT_USECOUPON_DESC" class="btn-group btn-group-yesno">
+					<option value="1">JYES</option>
+					<option value="0">JNO</option>
+				</field>
+                <field
+                    name="free_couponcode"
+                    type="sql"
+                    label="PLG_SYSTEM_FREEPRODUCT_DELECTCOUPON_LBL"
+                    description="PLG_SYSTEM_FREEPRODUCT_DELECTCOUPON_DESC"
+                    query="SELECT `discount_code` FROM `#__hikashop_discount` WHERE `discount_type`='coupon'"
+                    key_field="discount_code"
+                    value_field="discount_code"
+                    header="Please select your option"
+                    showon="usecoupon:1"
+                />
 			</fieldset>
 		</fields>
 	</config>

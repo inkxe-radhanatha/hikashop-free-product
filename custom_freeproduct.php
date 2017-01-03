@@ -1,7 +1,7 @@
 <?php
 /**
  * @HikaShop add free product for Joomla!
- * @version	1.0.0
+ * @version	1.0.2
  * @author	rick@r2h.nl
  * @copyright	(C) 2010-2016 R2H B.V.. All rights reserved.
  * @license	GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
@@ -13,57 +13,86 @@ jimport('joomla.plugin.plugin');
 
 class plgSystemCustom_freeproduct extends JPlugin{
 
-	function plgSystemCustom_freeproduct(&$subject, $config){
+    function plgSystemCustom_freeproduct(&$subject, $config){
 		parent::__construct($subject, $config);
 	}
 
-	// Call a trigger, in this example: onBeforeOrderCreate
-	function onAfterCartProductsLoad(&$cart) {
-
-		// Actions to do when my trigger is called
-		$number_of_items    = 0;
-		$total              = 0;
+	// Call the trigger onBeforeOrderCreate
+	function onAfterCartProductsLoad(&$cart)
+    {
+        // Set variables
         $product_id         = $this->params->get('free_prod_id','');
         $quantity           = $this->params->get('free_prod_quantity','1');
         $product_min_price  = $this->params->get('free_prod_price','0');
-
-        /*
-        // Debug info
-        echo '<pre>';
-        print_r($cart->products);
-        echo '</pre>';
-        */
-
+        $usecoupon          = $this->params->get('usecoupon','0');
+        $free_couponcode    = $this->params->get('free_couponcode','Empty');
         $productClass       = hikashop_get('class.product');
-        $productinfo        = $productClass->get($product_id); // Load free product info to check if product exist
+        $productinfo        = $productClass->get($product_id,''); // Load free product info
 
+		/*
+	    // Debug info
+        echo '<pre>';
+        //print_r($cart);
+        //print_r($cart->products);
+        //print_r($productClass);
+	    //print_r($cart->full_total->prices[0]->price_value_with_tax);
+        echo '</pre>';
+		*/
+
+        // Actions to do when my trigger is called
+
+        // Load free product info to check if product exist
         if (isset($productinfo))
         {
-            foreach($cart->products as $product)
-            {
-                $number_of_items+=$product->cart_product_quantity;
+			// Get total from cart
+	        $total = $cart->full_total->prices[0]->price_value_with_tax;
 
-                If (isset($product->prices[0]->price_value_with_tax))
-                {
-                    $total = $total + $product->prices[0]->price_value_with_tax;
+            // Instantiate cart class
+	        $class = hikashop_get('class.cart');
+
+            // Check to use coupon code
+            if ($usecoupon == 1) // Use it
+            {
+                // Load cart data from Hikashop cart class
+                $cartData = $class->loadCart($cart->cart_id);
+                //var_dump($cartData);
+
+                // Check if coupon code from the Hikashop cart class
+                // is equal to selected coupon code in plugin
+                if ($cartData->cart_coupon == $free_couponcode) {
+
+                	// Check if cart total is larger than te plugin minimum price
+                    if ($total > $product_min_price)
+                    {
+                        // Add the free product
+                        $class->update($product_id, $quantity);
+                    }
+                    else
+                    {
+                        // Remove the free product
+                        $class->update($product_id, 0);
+                    }
                 }
-            }
-
-            /*
-            // Debug info
-            echo $number_of_items . ' - ' . $total . '<br>';
-            */
-
-            if ($total > $product_min_price)
-            {
-                $class = hikashop_get('class.cart');
-                $class->update($product_id, $quantity);
+                else
+                {
+                    // Remove the free product
+                    $class->update($product_id, 0);
+                }
             }
             else
             {
-                $class = hikashop_get('class.cart');
-                $class->update($product_id, 0);
+                // Check if cart total is larger than te plugin minimum price
+                if ($total > $product_min_price)
+                {
+                    // Add the free product
+                    $class->update($product_id, $quantity);
+                }
+                else
+                {
+                    // Remove the free product
+                    $class->update($product_id, 0);
+                }
             }
         }
-	}
+    }
 }
