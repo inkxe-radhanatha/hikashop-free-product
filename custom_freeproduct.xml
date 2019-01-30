@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension version="2.5" type="plugin" group="system" method="upgrade">
+<extension
+	version="2.5"
+	type="plugin"
+	group="system"
+	method="upgrade">
 	<name>PLG_SYSTEM_FREEPRODUCT</name>
 	<creationDate>24-11-2016</creationDate>
 	<version>1.0.2</version>
@@ -9,21 +13,51 @@
 	<copyright>(C) 2010-2016 R2H B.V.. All rights reserved.</copyright>
 	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
 	<description>PLG_SYSTEM_FREEPRODUCT_XML_DESCRIPTION</description>
+
 	<files>
 		<filename plugin="custom_freeproduct">custom_freeproduct.php</filename>
 		<filename>index.html</filename>
 	</files>
+
     <languages>
         <language tag="en-GB">language/en-GB/en-GB.plg_system_custom_freeproduct.ini</language>
         <language tag="en-GB">language/en-GB/en-GB.plg_system_custom_freeproduct.sys.ini</language>
     </languages>
+
 	<config>
 		<fields name="params">
 			<fieldset name="basic">
-				<field name="free_prod_id" type="text" default="0" label="PLG_SYSTEM_FREEPRODUCT_ID_LBL" description="PLG_SYSTEM_FREEPRODUCT_ID_DESC" filter="integer" />
-                <field name="free_prod_quantity" type="text" default="1" label="PLG_SYSTEM_FREEPRODUCT_PRODQUANT_LBL" description="PLG_SYSTEM_FREEPRODUCT_PRODQUANT_DESC" filter="integer" />
-                <field name="free_prod_price" type="text" default="0" label="PLG_SYSTEM_FREEPRODUCT_MINPRICE_LBL" description="PLG_SYSTEM_FREEPRODUCT_MINPRICE_DESC" filter="integer" />
-				<field name="usecoupon" type="radio" default="0" label="PLG_SYSTEM_FREEPRODUCT_USECOUPON_LBL" description="PLG_SYSTEM_FREEPRODUCT_USECOUPON_DESC" class="btn-group btn-group-yesno">
+				<field
+					name="free_prod_id"
+					type="text"
+					default="0"
+					label="PLG_SYSTEM_FREEPRODUCT_ID_LBL"
+					description="PLG_SYSTEM_FREEPRODUCT_ID_DESC"
+					filter="integer" />
+
+                <field
+					name="free_prod_quantity"
+					type="text"
+					default="1"
+					label="PLG_SYSTEM_FREEPRODUCT_PRODQUANT_LBL"
+					description="PLG_SYSTEM_FREEPRODUCT_PRODQUANT_DESC"
+					filter="integer" />
+
+                <field
+					name="free_prod_price"
+					type="text"
+					default="0"
+					label="PLG_SYSTEM_FREEPRODUCT_MINPRICE_LBL"
+					description="PLG_SYSTEM_FREEPRODUCT_MINPRICE_DESC"
+					filter="integer" />
+
+				<field
+					name="usecoupon"
+					type="radio"
+					default="0"
+					label="PLG_SYSTEM_FREEPRODUCT_USECOUPON_LBL"
+					description="PLG_SYSTEM_FREEPRODUCT_USECOUPON_DESC"
+					class="btn-group btn-group-yesno">
 					<option value="1">JYES</option>
 					<option value="0">JNO</option>
 				</field>
