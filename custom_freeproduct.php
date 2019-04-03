@@ -51,7 +51,7 @@ class plgSystemCustom_freeproduct extends JPlugin
                         $class->update($product_id, $quantity);
                     } else {
                         // Remove the free product.
-                        $class->update($product_id, 0);
+                        $class->update($product_id, 0, 1);
                     }
                 } else {
                     // Remove the free product.
